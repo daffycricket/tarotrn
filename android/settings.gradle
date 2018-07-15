@@ -1,0 +1,3 @@
+rootProject.name = 'tarotrn'
+
+include ':app'

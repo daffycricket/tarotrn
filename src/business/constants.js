@@ -27,8 +27,8 @@ export const STANDARD_CONTRACTS_RATES = {
   gardeContre: 6
 };
 
-export const GAME_STYLES = {
-  threePlayerStyle: 3,
-  fourPlayerStyle: 4,
-  fivePlayerStyle: 5
+export const GAME_TYPES = {
+  threePlayerType: 3,
+  fourPlayerType: 4,
+  fivePlayerType: 5
 };

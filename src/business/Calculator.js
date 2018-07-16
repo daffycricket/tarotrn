@@ -3,8 +3,9 @@ import { IllegalArgumentError } from './IllegalArgumentError';
 import { OUDLER_COUNT_POINTS, CONTRACTS } from './constants';
 
 export class Calculator {
-  constructor(contractPointValues) {
+  constructor(contractPointValues, gameType) {
     this.contractPointValues = contractPointValues;
+    this.gameType = gameType;
   }
 
   computeAttackDeltaPoints = (attackScore, attackOudlerCount) => {
@@ -47,7 +48,16 @@ export class Calculator {
     }
   };
 
-  computeIndividualGamePoints = (attackScore, attackOudlerCount, contract) => {
+  computeGameBasePoints = (attackScore, attackOudlerCount, contract) => {
+    const toReturn = { attackPoints: 0, defensePoints: 0 };
+    const individualAttackGamePoints = this.computeIndividualAttackGamePoints(attackScore, attackOudlerCount, contract);
+    toReturn.attackPoints = individualAttackGamePoints;
+    toReturn.defensePoints = -individualAttackGamePoints;
+
+    return toReturn;
+  }
+
+  computeIndividualAttackGamePoints = (attackScore, attackOudlerCount, contract) => {
     let contractPoints = 0;
     switch (contract) {
       case CONTRACTS.prise:

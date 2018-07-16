@@ -1,9 +1,9 @@
 // jest matchers https://jestjs.io/docs/en/using-matchers
 import { Calculator } from '../src/business';
-import { GAME_STYLES, CONTRACTS, STANDARD_CONTRACTS_POINTS } from '../src/business/constants';
+import { GAME_TYPES, CONTRACTS, STANDARD_CONTRACTS_POINTS } from '../src/business/constants';
 
 const contractPointValues = STANDARD_CONTRACTS_POINTS;
-const calculator = new Calculator(contractPointValues);
+const calculator = new Calculator(contractPointValues, GAME_TYPES.threePlayerType);
 
 test('delta with zero oudler calculation is correct', () => {
   deltaScore = calculator.computeAttackDeltaPoints(40, 0);
@@ -53,57 +53,115 @@ test('attack wins with attack score equals to oudler count points', () => {
 });
 
 test('attack point calculation is correct if attack wins a prise', () => {
-  expect(calculator.computeIndividualGamePoints(36, 3, CONTRACTS.prise)).toBe(contractPointValues.prise);
-  expect(calculator.computeIndividualGamePoints(41, 2, CONTRACTS.prise)).toBe(contractPointValues.prise);
-  expect(calculator.computeIndividualGamePoints(51, 1, CONTRACTS.prise)).toBe(contractPointValues.prise);
-  expect(calculator.computeIndividualGamePoints(56, 0, CONTRACTS.prise)).toBe(contractPointValues.prise);
+  expect(calculator.computeIndividualAttackGamePoints(36, 3, CONTRACTS.prise)).toBe(contractPointValues.prise);
+  expect(calculator.computeIndividualAttackGamePoints(41, 2, CONTRACTS.prise)).toBe(contractPointValues.prise);
+  expect(calculator.computeIndividualAttackGamePoints(51, 1, CONTRACTS.prise)).toBe(contractPointValues.prise);
+  expect(calculator.computeIndividualAttackGamePoints(56, 0, CONTRACTS.prise)).toBe(contractPointValues.prise);
 });
 
 test('attack point calculation is correct if attack loses a prise', () => {
-  expect(calculator.computeIndividualGamePoints(35, 3, CONTRACTS.prise)).toBe(-(contractPointValues.prise + 1));
-  expect(calculator.computeIndividualGamePoints(39, 2, CONTRACTS.prise)).toBe(-(contractPointValues.prise + 2));
-  expect(calculator.computeIndividualGamePoints(45, 1, CONTRACTS.prise)).toBe(-(contractPointValues.prise + 6));
-  expect(calculator.computeIndividualGamePoints(45, 0, CONTRACTS.prise)).toBe(-(contractPointValues.prise + 11));
+  expect(calculator.computeIndividualAttackGamePoints(35, 3, CONTRACTS.prise)).toBe(-(contractPointValues.prise + 1));
+  expect(calculator.computeIndividualAttackGamePoints(39, 2, CONTRACTS.prise)).toBe(-(contractPointValues.prise + 2));
+  expect(calculator.computeIndividualAttackGamePoints(45, 1, CONTRACTS.prise)).toBe(-(contractPointValues.prise + 6));
+  expect(calculator.computeIndividualAttackGamePoints(45, 0, CONTRACTS.prise)).toBe(-(contractPointValues.prise + 11));
 });
 
 test('attack point calculation is correct if attack wins a garde', () => {
-  expect(calculator.computeIndividualGamePoints(36, 3, CONTRACTS.garde)).toBe(contractPointValues.garde);
-  expect(calculator.computeIndividualGamePoints(41, 2, CONTRACTS.garde)).toBe(contractPointValues.garde);
-  expect(calculator.computeIndividualGamePoints(51, 1, CONTRACTS.garde)).toBe(contractPointValues.garde);
-  expect(calculator.computeIndividualGamePoints(56, 0, CONTRACTS.garde)).toBe(contractPointValues.garde);
+  expect(calculator.computeIndividualAttackGamePoints(36, 3, CONTRACTS.garde)).toBe(contractPointValues.garde);
+  expect(calculator.computeIndividualAttackGamePoints(41, 2, CONTRACTS.garde)).toBe(contractPointValues.garde);
+  expect(calculator.computeIndividualAttackGamePoints(51, 1, CONTRACTS.garde)).toBe(contractPointValues.garde);
+  expect(calculator.computeIndividualAttackGamePoints(56, 0, CONTRACTS.garde)).toBe(contractPointValues.garde);
 });
 
 test('attack point calculation is correct if attack loses a garde', () => {
-  expect(calculator.computeIndividualGamePoints(35, 3, CONTRACTS.garde)).toBe(-(contractPointValues.garde + 1));
-  expect(calculator.computeIndividualGamePoints(39, 2, CONTRACTS.garde)).toBe(-(contractPointValues.garde + 2));
-  expect(calculator.computeIndividualGamePoints(45, 1, CONTRACTS.garde)).toBe(-(contractPointValues.garde + 6));
-  expect(calculator.computeIndividualGamePoints(45, 0, CONTRACTS.garde)).toBe(-(contractPointValues.garde + 11));
+  expect(calculator.computeIndividualAttackGamePoints(35, 3, CONTRACTS.garde)).toBe(-(contractPointValues.garde + 1));
+  expect(calculator.computeIndividualAttackGamePoints(39, 2, CONTRACTS.garde)).toBe(-(contractPointValues.garde + 2));
+  expect(calculator.computeIndividualAttackGamePoints(45, 1, CONTRACTS.garde)).toBe(-(contractPointValues.garde + 6));
+  expect(calculator.computeIndividualAttackGamePoints(45, 0, CONTRACTS.garde)).toBe(-(contractPointValues.garde + 11));
 });
 
 test('attack point calculation is correct if attack wins a garde sans', () => {
-  expect(calculator.computeIndividualGamePoints(36, 3, CONTRACTS.gardeSans)).toBe(contractPointValues.gardeSans);
-  expect(calculator.computeIndividualGamePoints(41, 2, CONTRACTS.gardeSans)).toBe(contractPointValues.gardeSans);
-  expect(calculator.computeIndividualGamePoints(51, 1, CONTRACTS.gardeSans)).toBe(contractPointValues.gardeSans);
-  expect(calculator.computeIndividualGamePoints(56, 0, CONTRACTS.gardeSans)).toBe(contractPointValues.gardeSans);
+  expect(calculator.computeIndividualAttackGamePoints(36, 3, CONTRACTS.gardeSans)).toBe(contractPointValues.gardeSans);
+  expect(calculator.computeIndividualAttackGamePoints(41, 2, CONTRACTS.gardeSans)).toBe(contractPointValues.gardeSans);
+  expect(calculator.computeIndividualAttackGamePoints(51, 1, CONTRACTS.gardeSans)).toBe(contractPointValues.gardeSans);
+  expect(calculator.computeIndividualAttackGamePoints(56, 0, CONTRACTS.gardeSans)).toBe(contractPointValues.gardeSans);
 });
 
 test('attack point calculation is correct if attack loses a garde sans', () => {
-  expect(calculator.computeIndividualGamePoints(35, 3, CONTRACTS.gardeSans)).toBe(-(contractPointValues.gardeSans + 1));
-  expect(calculator.computeIndividualGamePoints(39, 2, CONTRACTS.gardeSans)).toBe(-(contractPointValues.gardeSans + 2));
-  expect(calculator.computeIndividualGamePoints(45, 1, CONTRACTS.gardeSans)).toBe(-(contractPointValues.gardeSans + 6));
-  expect(calculator.computeIndividualGamePoints(45, 0, CONTRACTS.gardeSans)).toBe(-(contractPointValues.gardeSans + 11));
+  expect(calculator.computeIndividualAttackGamePoints(35, 3, CONTRACTS.gardeSans)).toBe(-(contractPointValues.gardeSans + 1));
+  expect(calculator.computeIndividualAttackGamePoints(39, 2, CONTRACTS.gardeSans)).toBe(-(contractPointValues.gardeSans + 2));
+  expect(calculator.computeIndividualAttackGamePoints(45, 1, CONTRACTS.gardeSans)).toBe(-(contractPointValues.gardeSans + 6));
+  expect(calculator.computeIndividualAttackGamePoints(45, 0, CONTRACTS.gardeSans)).toBe(-(contractPointValues.gardeSans + 11));
 });
 
 test('attack point calculation is correct if attack wins a garde contre', () => {
-  expect(calculator.computeIndividualGamePoints(36, 3, CONTRACTS.gardeContre)).toBe(contractPointValues.gardeContre);
-  expect(calculator.computeIndividualGamePoints(41, 2, CONTRACTS.gardeContre)).toBe(contractPointValues.gardeContre);
-  expect(calculator.computeIndividualGamePoints(51, 1, CONTRACTS.gardeContre)).toBe(contractPointValues.gardeContre);
-  expect(calculator.computeIndividualGamePoints(56, 0, CONTRACTS.gardeContre)).toBe(contractPointValues.gardeContre);
+  expect(calculator.computeIndividualAttackGamePoints(36, 3, CONTRACTS.gardeContre)).toBe(contractPointValues.gardeContre);
+  expect(calculator.computeIndividualAttackGamePoints(41, 2, CONTRACTS.gardeContre)).toBe(contractPointValues.gardeContre);
+  expect(calculator.computeIndividualAttackGamePoints(51, 1, CONTRACTS.gardeContre)).toBe(contractPointValues.gardeContre);
+  expect(calculator.computeIndividualAttackGamePoints(56, 0, CONTRACTS.gardeContre)).toBe(contractPointValues.gardeContre);
 });
 
 test('attack point calculation is correct if attack loses a garde contre', () => {
-  expect(calculator.computeIndividualGamePoints(35, 3, CONTRACTS.gardeContre)).toBe(-(contractPointValues.gardeContre + 1));
-  expect(calculator.computeIndividualGamePoints(39, 2, CONTRACTS.gardeContre)).toBe(-(contractPointValues.gardeContre + 2));
-  expect(calculator.computeIndividualGamePoints(45, 1, CONTRACTS.gardeContre)).toBe(-(contractPointValues.gardeContre + 6));
-  expect(calculator.computeIndividualGamePoints(45, 0, CONTRACTS.gardeContre)).toBe(-(contractPointValues.gardeContre + 11));
+  expect(calculator.computeIndividualAttackGamePoints(35, 3, CONTRACTS.gardeContre)).toBe(-(contractPointValues.gardeContre + 1));
+  expect(calculator.computeIndividualAttackGamePoints(39, 2, CONTRACTS.gardeContre)).toBe(-(contractPointValues.gardeContre + 2));
+  expect(calculator.computeIndividualAttackGamePoints(45, 1, CONTRACTS.gardeContre)).toBe(-(contractPointValues.gardeContre + 6));
+  expect(calculator.computeIndividualAttackGamePoints(45, 0, CONTRACTS.gardeContre)).toBe(-(contractPointValues.gardeContre + 11));
+});
+
+test('game point calculation is correct if attack wins a prise', () => {
+  // TODO check syntax, commented line doesnt work
+  // expect(calculator.computeGameBasePoints(36, 3, CONTRACTS.prise)).toEqual({ attackPoints: CONTRACTS.garde, defensePoints: -CONTRACTS.garde });
+  expect(calculator.computeGameBasePoints(36, 3, CONTRACTS.prise)).toEqual({ attackPoints: 25, defensePoints: -25 });
+  expect(calculator.computeGameBasePoints(41, 2, CONTRACTS.prise)).toEqual({ attackPoints: 25, defensePoints: -25 });
+  expect(calculator.computeGameBasePoints(51, 1, CONTRACTS.prise)).toEqual({ attackPoints: 25, defensePoints: -25 });
+  expect(calculator.computeGameBasePoints(56, 0, CONTRACTS.prise)).toEqual({ attackPoints: 25, defensePoints: -25 });
+});
+
+test('game point calculation is correct if attack loses a prise', () => {
+  expect(calculator.computeGameBasePoints(35, 3, CONTRACTS.prise)).toEqual({ attackPoints: -26, defensePoints: 26 });
+  expect(calculator.computeGameBasePoints(40, 2, CONTRACTS.prise)).toEqual({ attackPoints: -26, defensePoints: 26 });
+  expect(calculator.computeGameBasePoints(50, 1, CONTRACTS.prise)).toEqual({ attackPoints: -26, defensePoints: 26 });
+  expect(calculator.computeGameBasePoints(55, 0, CONTRACTS.prise)).toEqual({ attackPoints: -26, defensePoints: 26 });
+});
+
+test('game point calculation is correct if attack wins a garde', () => {
+  expect(calculator.computeGameBasePoints(36, 3, CONTRACTS.garde)).toEqual({ attackPoints: 50, defensePoints: -50 });
+  expect(calculator.computeGameBasePoints(41, 2, CONTRACTS.garde)).toEqual({ attackPoints: 50, defensePoints: -50 });
+  expect(calculator.computeGameBasePoints(51, 1, CONTRACTS.garde)).toEqual({ attackPoints: 50, defensePoints: -50 });
+  expect(calculator.computeGameBasePoints(56, 0, CONTRACTS.garde)).toEqual({ attackPoints: 50, defensePoints: -50 });
+});
+
+test('game point calculation is correct if attack loses a garde', () => {
+  expect(calculator.computeGameBasePoints(35, 3, CONTRACTS.garde)).toEqual({ attackPoints: -51, defensePoints: 51 });
+  expect(calculator.computeGameBasePoints(40, 2, CONTRACTS.garde)).toEqual({ attackPoints: -51, defensePoints: 51 });
+  expect(calculator.computeGameBasePoints(50, 1, CONTRACTS.garde)).toEqual({ attackPoints: -51, defensePoints: 51 });
+  expect(calculator.computeGameBasePoints(55, 0, CONTRACTS.garde)).toEqual({ attackPoints: -51, defensePoints: 51 });
+});
+
+test('game point calculation is correct if attack wins a garde sans', () => {
+  expect(calculator.computeGameBasePoints(36, 3, CONTRACTS.gardeSans)).toEqual({ attackPoints: 100, defensePoints: -100 });
+  expect(calculator.computeGameBasePoints(41, 2, CONTRACTS.gardeSans)).toEqual({ attackPoints: 100, defensePoints: -100 });
+  expect(calculator.computeGameBasePoints(51, 1, CONTRACTS.gardeSans)).toEqual({ attackPoints: 100, defensePoints: -100 });
+  expect(calculator.computeGameBasePoints(56, 0, CONTRACTS.gardeSans)).toEqual({ attackPoints: 100, defensePoints: -100 });
+});
+
+test('game point calculation is correct if attack loses a garde sans', () => {
+  expect(calculator.computeGameBasePoints(35, 3, CONTRACTS.gardeSans)).toEqual({ attackPoints: -101, defensePoints: 101 });
+  expect(calculator.computeGameBasePoints(40, 2, CONTRACTS.gardeSans)).toEqual({ attackPoints: -101, defensePoints: 101 });
+  expect(calculator.computeGameBasePoints(50, 1, CONTRACTS.gardeSans)).toEqual({ attackPoints: -101, defensePoints: 101 });
+  expect(calculator.computeGameBasePoints(55, 0, CONTRACTS.gardeSans)).toEqual({ attackPoints: -101, defensePoints: 101 });
+});
+
+test('game point calculation is correct if attack wins a garde contre', () => {
+  expect(calculator.computeGameBasePoints(36, 3, CONTRACTS.gardeContre)).toEqual({ attackPoints: 150, defensePoints: -150 });
+  expect(calculator.computeGameBasePoints(41, 2, CONTRACTS.gardeContre)).toEqual({ attackPoints: 150, defensePoints: -150 });
+  expect(calculator.computeGameBasePoints(51, 1, CONTRACTS.gardeContre)).toEqual({ attackPoints: 150, defensePoints: -150 });
+  expect(calculator.computeGameBasePoints(56, 0, CONTRACTS.gardeContre)).toEqual({ attackPoints: 150, defensePoints: -150 });
+});
+
+test('game point calculation is correct if attack loses a garde contre', () => {
+  expect(calculator.computeGameBasePoints(35, 3, CONTRACTS.gardeContre)).toEqual({ attackPoints: -151, defensePoints: 151 });
+  expect(calculator.computeGameBasePoints(40, 2, CONTRACTS.gardeContre)).toEqual({ attackPoints: -151, defensePoints: 151 });
+  expect(calculator.computeGameBasePoints(50, 1, CONTRACTS.gardeContre)).toEqual({ attackPoints: -151, defensePoints: 151 });
+  expect(calculator.computeGameBasePoints(55, 0, CONTRACTS.gardeContre)).toEqual({ attackPoints: -151, defensePoints: 151 });
 });

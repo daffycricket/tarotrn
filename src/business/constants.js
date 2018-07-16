@@ -28,7 +28,7 @@ export const STANDARD_CONTRACTS_RATES = {
 };
 
 export const GAME_TYPES = {
-  threePlayerType: 3,
-  fourPlayerType: 4,
-  fivePlayerType: 5
+  threePlayers: 3,
+  fourPlayers: 4,
+  fivePlayers: 5
 };

@@ -1,11 +1,12 @@
 
 import { IllegalArgumentError } from './IllegalArgumentError';
-import { OUDLER_COUNT_POINTS, CONTRACTS } from './constants';
+import { OUDLER_COUNT_POINTS, CONTRACTS, GAME_TYPES } from './constants';
 
 export class Calculator {
-  constructor(contractPointValues, gameType) {
+  constructor(contractPointValues, gameType, players) {
     this.contractPointValues = contractPointValues;
     this.gameType = gameType;
+    this.players = players;
   }
 
   computeAttackDeltaPoints = (attackScore, attackOudlerCount) => {
@@ -55,6 +56,46 @@ export class Calculator {
     toReturn.defensePoints = -individualAttackGamePoints;
 
     return toReturn;
+  }
+
+  computeGameScores = (attackScore, attackOudlerCount, contract, attackPlayers, defensePlayers) => {
+    const gameScore = {};
+    const individualAttackGamePoints = this.computeIndividualAttackGamePoints(attackScore, attackOudlerCount, contract);
+
+    // computation for 3 players
+    if (this.gameType === GAME_TYPES.threePlayers) {
+      gameScore[attackPlayers[0]] = individualAttackGamePoints * 2;
+      gameScore[defensePlayers[0]] = -individualAttackGamePoints;
+      gameScore[defensePlayers[1]] = -individualAttackGamePoints;
+    }
+
+    // computation for 4 players
+    else if (this.gameType === GAME_TYPES.fourPlayers) {
+      gameScore[attackPlayers[0]] = individualAttackGamePoints * 3;
+      gameScore[defensePlayers[0]] = -individualAttackGamePoints;
+      gameScore[defensePlayers[1]] = -individualAttackGamePoints;
+      gameScore[defensePlayers[2]] = -individualAttackGamePoints;
+    }
+
+    // computation for 5 players
+    else if (this.gameType === GAME_TYPES.fivePlayers) {
+      gameScore[attackPlayers[0]] = individualAttackGamePoints * 2;
+      gameScore[attackPlayers[1]] = individualAttackGamePoints;
+      gameScore[defensePlayers[0]] = -individualAttackGamePoints;
+      gameScore[defensePlayers[1]] = -individualAttackGamePoints;
+      gameScore[defensePlayers[2]] = -individualAttackGamePoints;
+    }
+
+    // TODO computation for 5 players when one player is against four players
+
+
+    else {
+      throw new IllegalArgumentError(
+        'incorrect game type, should be threePlayers, fourPlayers or fivePlayers'
+      );
+    }
+
+    return gameScore;
   }
 
   computeIndividualAttackGamePoints = (attackScore, attackOudlerCount, contract) => {

@@ -3,7 +3,7 @@ import { Calculator } from '../src/business';
 import { GAME_TYPES, CONTRACTS, STANDARD_CONTRACTS_POINTS } from '../src/business/constants';
 
 const contractPointValues = STANDARD_CONTRACTS_POINTS;
-const calculator = new Calculator(contractPointValues, GAME_TYPES.threePlayerType);
+const calculator = new Calculator(contractPointValues, GAME_TYPES.threePlayers, {});
 
 test('delta with zero oudler calculation is correct', () => {
   deltaScore = calculator.computeAttackDeltaPoints(40, 0);
@@ -108,7 +108,7 @@ test('attack point calculation is correct if attack loses a garde contre', () =>
   expect(calculator.computeIndividualAttackGamePoints(45, 0, CONTRACTS.gardeContre)).toBe(-(contractPointValues.gardeContre + 11));
 });
 
-test('game point calculation is correct if attack wins a prise', () => {
+test('game base point calculation is correct if attack wins a prise', () => {
   // TODO check syntax, commented line doesnt work
   // expect(calculator.computeGameBasePoints(36, 3, CONTRACTS.prise)).toEqual({ attackPoints: CONTRACTS.garde, defensePoints: -CONTRACTS.garde });
   expect(calculator.computeGameBasePoints(36, 3, CONTRACTS.prise)).toEqual({ attackPoints: 25, defensePoints: -25 });
@@ -117,14 +117,14 @@ test('game point calculation is correct if attack wins a prise', () => {
   expect(calculator.computeGameBasePoints(56, 0, CONTRACTS.prise)).toEqual({ attackPoints: 25, defensePoints: -25 });
 });
 
-test('game point calculation is correct if attack loses a prise', () => {
+test('game base point calculation is correct if attack loses a prise', () => {
   expect(calculator.computeGameBasePoints(35, 3, CONTRACTS.prise)).toEqual({ attackPoints: -26, defensePoints: 26 });
   expect(calculator.computeGameBasePoints(40, 2, CONTRACTS.prise)).toEqual({ attackPoints: -26, defensePoints: 26 });
   expect(calculator.computeGameBasePoints(50, 1, CONTRACTS.prise)).toEqual({ attackPoints: -26, defensePoints: 26 });
   expect(calculator.computeGameBasePoints(55, 0, CONTRACTS.prise)).toEqual({ attackPoints: -26, defensePoints: 26 });
 });
 
-test('game point calculation is correct if attack wins a garde', () => {
+test('game base point calculation is correct if attack wins a garde', () => {
   expect(calculator.computeGameBasePoints(36, 3, CONTRACTS.garde)).toEqual({ attackPoints: 50, defensePoints: -50 });
   expect(calculator.computeGameBasePoints(41, 2, CONTRACTS.garde)).toEqual({ attackPoints: 50, defensePoints: -50 });
   expect(calculator.computeGameBasePoints(51, 1, CONTRACTS.garde)).toEqual({ attackPoints: 50, defensePoints: -50 });
@@ -138,28 +138,28 @@ test('game point calculation is correct if attack loses a garde', () => {
   expect(calculator.computeGameBasePoints(55, 0, CONTRACTS.garde)).toEqual({ attackPoints: -51, defensePoints: 51 });
 });
 
-test('game point calculation is correct if attack wins a garde sans', () => {
+test('game base point calculation is correct if attack wins a garde sans', () => {
   expect(calculator.computeGameBasePoints(36, 3, CONTRACTS.gardeSans)).toEqual({ attackPoints: 100, defensePoints: -100 });
   expect(calculator.computeGameBasePoints(41, 2, CONTRACTS.gardeSans)).toEqual({ attackPoints: 100, defensePoints: -100 });
   expect(calculator.computeGameBasePoints(51, 1, CONTRACTS.gardeSans)).toEqual({ attackPoints: 100, defensePoints: -100 });
   expect(calculator.computeGameBasePoints(56, 0, CONTRACTS.gardeSans)).toEqual({ attackPoints: 100, defensePoints: -100 });
 });
 
-test('game point calculation is correct if attack loses a garde sans', () => {
+test('game base point calculation is correct if attack loses a garde sans', () => {
   expect(calculator.computeGameBasePoints(35, 3, CONTRACTS.gardeSans)).toEqual({ attackPoints: -101, defensePoints: 101 });
   expect(calculator.computeGameBasePoints(40, 2, CONTRACTS.gardeSans)).toEqual({ attackPoints: -101, defensePoints: 101 });
   expect(calculator.computeGameBasePoints(50, 1, CONTRACTS.gardeSans)).toEqual({ attackPoints: -101, defensePoints: 101 });
   expect(calculator.computeGameBasePoints(55, 0, CONTRACTS.gardeSans)).toEqual({ attackPoints: -101, defensePoints: 101 });
 });
 
-test('game point calculation is correct if attack wins a garde contre', () => {
+test('game base point calculation is correct if attack wins a garde contre', () => {
   expect(calculator.computeGameBasePoints(36, 3, CONTRACTS.gardeContre)).toEqual({ attackPoints: 150, defensePoints: -150 });
   expect(calculator.computeGameBasePoints(41, 2, CONTRACTS.gardeContre)).toEqual({ attackPoints: 150, defensePoints: -150 });
   expect(calculator.computeGameBasePoints(51, 1, CONTRACTS.gardeContre)).toEqual({ attackPoints: 150, defensePoints: -150 });
   expect(calculator.computeGameBasePoints(56, 0, CONTRACTS.gardeContre)).toEqual({ attackPoints: 150, defensePoints: -150 });
 });
 
-test('game point calculation is correct if attack loses a garde contre', () => {
+test('game base point calculation is correct if attack loses a garde contre', () => {
   expect(calculator.computeGameBasePoints(35, 3, CONTRACTS.gardeContre)).toEqual({ attackPoints: -151, defensePoints: 151 });
   expect(calculator.computeGameBasePoints(40, 2, CONTRACTS.gardeContre)).toEqual({ attackPoints: -151, defensePoints: 151 });
   expect(calculator.computeGameBasePoints(50, 1, CONTRACTS.gardeContre)).toEqual({ attackPoints: -151, defensePoints: 151 });
